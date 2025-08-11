@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: signin-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/signin/**
+
+        - id: signup-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/signup/**
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+
+  main:
+    web-application-type: reactive
